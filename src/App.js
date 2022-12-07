@@ -10,7 +10,7 @@ const App = () => {
     if (!sourceRef.current) {
       sourceRef.current = new EventSource("http://localhost:3001/gas", { withCredentials: false });
       sourceRef.current.addEventListener(
-        "message",
+        "gas",
         (e) => {
           const [a, b, ...rest] = [...e.data];
           setGas(`${a}${b}.${rest.splice(0, 3).join("")}`);

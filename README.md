@@ -2,6 +2,8 @@
 
 Server Sent Event demo.
 
+First copy .env.sample to .env and replace ETHERSCAN API KEY with yours
+
 ## Available Scripts
 
 In the project directory, you can run:
