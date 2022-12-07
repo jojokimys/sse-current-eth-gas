@@ -1,11 +1,11 @@
-import express from "express";
-import dotenv from "dotenv";
-
-dotenv.config();
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const ethers = require("ethers");
 
 const app = express();
-const port = 4001;
-const ethers = require("ethers");
+const port = 3001;
+app.use(cors());
 
 const currentGasFee = async () => {
   const provider = new ethers.providers.EtherscanProvider("mainnet", process.env.ETHERSCAN_KEY || "");
@@ -16,18 +16,17 @@ const currentGasFee = async () => {
   }
 };
 
-app.get("/api/gas", (req, res) => {
-  res.writeHead(200, {
-    "Content-Type": "text/event-stream",
+app.get("/gas", (req, res) => {
+  res.set({
     "Cache-Control": "no-cache",
+    "Content-Type": "text/event-stream",
     Connection: "keep-alive",
   });
+  res.flushHeaders();
 
   setInterval(async function () {
     const gas = await currentGasFee();
-    console.log(gas);
-    res.write("data: " + gas);
-    res.flush();
+    res.write("data: " + gas + "\n\n");
   }, 3000);
 });
 

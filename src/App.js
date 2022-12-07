@@ -8,7 +8,7 @@ const App = () => {
 
   useEffect(() => {
     if (!sourceRef.current) {
-      sourceRef.current = new EventSource("/api/gas", { withCredentials: true });
+      sourceRef.current = new EventSource("http://localhost:3001/gas", { withCredentials: false });
       sourceRef.current.addEventListener(
         "message",
         (e) => {
